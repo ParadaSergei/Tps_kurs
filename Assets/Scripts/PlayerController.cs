@@ -2,6 +2,8 @@
 
 public class PlayerController : MonoBehaviour
 {
+   
+
     [SerializeField] private float _rotationSpeed = 15f;
     [SerializeField] private Transform _CameraAxis;
     [SerializeField] private float _fallVelocity = 0f;
@@ -13,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private float _mouseY;
     private CharacterController _playerCollider;
 
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -22,16 +25,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        _mouseY = Input.GetAxis("Mouse Y");
         _mouseX = Input.GetAxis("Mouse X");
         transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y + Time.deltaTime * _mouseX * _rotationSpeed, 0);
-
-        float rotY = _CameraAxis.localEulerAngles.x + Time.deltaTime * _mouseY * _rotationSpeed * 3;
-        if (rotY > 180)
-            rotY -= 360;
-        rotY = Mathf.Clamp(rotY, -25, 15);
-        _CameraAxis.localEulerAngles = new Vector3(rotY, 0, 0);
-
         _movePlayer = Vector3.zero;
         if (Input.GetKey(KeyCode.W))
         {
