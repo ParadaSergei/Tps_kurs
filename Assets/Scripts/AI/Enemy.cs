@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public Transform _player;
     private bool _isPlayer = false;
     private float viewAngle = 65f;
+    public float damage = 10f;
 
     NavMeshAgent _agent;
     void Start()
@@ -39,11 +40,27 @@ public class Enemy : MonoBehaviour
         if (_isPlayer) _agent.destination = _player.position;
         else
         {
-            if (_agent.remainingDistance == _agent.stoppingDistance)
+            if (_agent.remainingDistance <= _agent.stoppingDistance)
             {
                 _agent.destination = _pointTransform[Random.Range(0, _pointTransform.Count)].position;
             }
         }
     }
-   
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            var playerHelth = other.GetComponent<PlayerHelth>();
+            if (playerHelth != null) playerHelth.initializationDamage(damage, true);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            var playerHelth = other.GetComponent<PlayerHelth>();
+            if (playerHelth != null) playerHelth.initializationDamage(damage, false);
+        }
+    }
+
 }

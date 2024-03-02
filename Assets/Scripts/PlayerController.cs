@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,17 +15,20 @@ public class PlayerController : MonoBehaviour
     private float _mouseX;
     private float _mouseY;
     private CharacterController _playerCollider;
+    
 
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         _playerCollider = GetComponent<CharacterController>();
         _movePlayer = Vector3.zero;
     }
 
     void Update()
     {
+       
         _mouseX = Input.GetAxis("Mouse X");
         transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y + Time.deltaTime * _mouseX * _rotationSpeed, 0);
         _movePlayer = Vector3.zero;
