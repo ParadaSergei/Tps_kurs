@@ -7,12 +7,12 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private float _rotationSpeed = 15f;
     [SerializeField] private Transform _CameraAxis;
-    [SerializeField] private Transform _pricel;
+    //[SerializeField] private Transform _player;
     private float _mouseY;
 
     void Update()
     {
-        //_pricel.rotation= transform.rotation;
+
         RotationCamera();   
     }
     public void RotationCamera()

@@ -11,11 +11,14 @@ public class Enemy : MonoBehaviour
     private bool _isPlayer = false;
     private float viewAngle = 65f;
     public float damage = 10f;
+    private Animator _animatorEnemy;
+    private int moveAnim = 0;
 
     NavMeshAgent _agent;
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _animatorEnemy = GetComponent<Animator>();
     }
     void Update()
     {
@@ -34,15 +37,22 @@ public class Enemy : MonoBehaviour
             _isPlayer = false;
         }
         Patrol();
+        _animatorEnemy.SetInteger("move", moveAnim);
+
     }
     private void Patrol()
     {
-        if (_isPlayer) _agent.destination = _player.position;
+
+        if (_isPlayer)
+        {
+            _agent.destination = _player.position;
+        }
         else
         {
             if (_agent.remainingDistance <= _agent.stoppingDistance)
             {
                 _agent.destination = _pointTransform[Random.Range(0, _pointTransform.Count)].position;
+                moveAnim = 1;
             }
         }
     }
@@ -52,6 +62,7 @@ public class Enemy : MonoBehaviour
         {
             var playerHelth = other.GetComponent<PlayerHelth>();
             if (playerHelth != null) playerHelth.initializationDamage(damage, true);
+            moveAnim = 2;
         }
     }
     private void OnTriggerExit(Collider other)

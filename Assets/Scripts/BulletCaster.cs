@@ -3,12 +3,16 @@
 public class BulletCaster : MonoBehaviour
 {
     [SerializeField] private Transform _pricel;
+    [SerializeField] private Transform _pricelGranate;
+
+
     public Transform targetPricel;
     public float targetPricelSky;
     public bool _isShoot = true;
 
 
     [SerializeField] private GameObject _bullet;
+
     public Camera cameraPlayer;
 
     void Update()
@@ -32,5 +36,6 @@ public class BulletCaster : MonoBehaviour
             }
             _pricel.LookAt(targetPricel.position);
         }
+        _pricelGranate.LookAt(targetPricel.position);
     }
 }
